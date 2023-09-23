@@ -15,9 +15,7 @@ export function SearchContent() {
   const page = useRef(1);
 
   const handleSearch = async () => {
-    console.log('page', page);
     const items = await getSearchResult('all', page.current, searchTerm);
-    console.log('items', items);
     if (items) {
       setResult((prev) => [...prev, ...items]);
     }
