@@ -4,6 +4,9 @@
   background-color: #37383e;
   border-radius: 5px;
   padding: 16px 24px;
+  position: sticky;
+  top: 24px;
+  height: fit-content;
 }
 
 .title {

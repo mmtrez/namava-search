@@ -1,8 +1,35 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {useSearchParams} from 'react-router-dom';
 
 import classes from './styles.module.css';
 
 export function Filters() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchType, setSearchType] = useState({
+    movie: !!searchParams.get('type'),
+    series: !!searchParams.get('type'),
+  });
+
+  const handleSetFilter = (event) => {
+    const target = event.target;
+    setSearchType((prev) => ({...prev, [target.name]: target.checked}));
+  };
+
+  useEffect(() => {
+    const {movie, series} = searchType;
+
+    if ((movie && series) || (!movie && !series)) {
+      searchParams.set('type', 'all');
+      setSearchParams(searchParams);
+    } else if (movie) {
+      searchParams.set('type', 'movie');
+      setSearchParams(searchParams);
+    } else if (series) {
+      searchParams.set('type', 'series');
+      setSearchParams(searchParams);
+    }
+  }, [searchType]);
+
   return (
     <div className={classes.container}>
       <h2 className={classes.title}>فیلتر‌ها</h2>
@@ -14,6 +41,8 @@ export function Filters() {
             id="movie"
             name="movie"
             value="movie"
+            checked={searchType.movie}
+            onChange={handleSetFilter}
           />
           <label className={classes.label} htmlFor="movie">
             فیلم
@@ -23,11 +52,13 @@ export function Filters() {
           <input
             className={classes.selectInput}
             type="checkbox"
-            id="tvshow"
-            name="tvshow"
-            value="tvshow"
+            id="series"
+            name="series"
+            value="series"
+            checked={searchType.series}
+            onChange={handleSetFilter}
           />
-          <label className={classes.label} htmlFor="tvshow">
+          <label className={classes.label} htmlFor="series">
             سریال
           </label>
         </div>
