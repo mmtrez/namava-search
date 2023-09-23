@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 24px 32px;
+}
+
+@media screen and (min-width: 1280px) {
+  .container {
+    gap: 40px;
+    padding-inline: 42px;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .container {
+    gap: 78px;
+    padding-inline: 56px;
+  }
+}

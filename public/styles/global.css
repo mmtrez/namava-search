@@ -1,0 +1,80 @@
+@font-face {
+  font-family: iranyekan;
+  font-weight: 100;
+  src: url('../assets/fonts/woff/iy_thin.woff') format('woff'),
+    url('../assets/fonts/ttf/iy_thin.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: iranyekan;
+  font-weight: 300;
+  src: url('../assets/fonts//woff/iy_light.woff') format('woff'),
+    url('../assets/fonts/ttf/iy_light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: iranyekan;
+  font-weight: 400;
+  src: url('../assets/fonts/woff/iy_regular.woff') format('woff'),
+    url('../assets/fonts/ttf/iy_regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: iranyekan;
+  font-weight: 500;
+  src: url('../assets/fonts/woff/iy_medium.woff') format('woff'),
+    url('../assets/fonts/ttf/iy_medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: iranyekan;
+  font-weight: 700;
+  src: url('../assets/fonts/woff/iy_bold.woff') format('woff'),
+    url('../assets/fonts/ttf/iy_bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: iranyekan;
+  font-weight: 800;
+  src: url('../assets/fonts/woff/iy_extrabold.woff') format('woff'),
+    url('../assets/fonts/ttf/iy_extrabold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: iranyekan;
+  font-weight: 900;
+  src: url('../assets/fonts/woff/iy_black.woff') format('woff'),
+    url('../assets/fonts/ttf/iy_black.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: iranyekan;
+  font-weight: 950;
+  src: url('../assets/fonts/woff/iy_extrablack.woff') format('woff'),
+    url('../assets/fonts/ttf/iy_extrablack.ttf') format('truetype');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  direction: rtl;
+}
+
+body {
+  font-family: 'iranyekan';
+  background-color: #121212;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+input {
+  font-family: 'iranyekan';
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}

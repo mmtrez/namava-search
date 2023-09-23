@@ -1,0 +1,39 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.imgContainer {
+  background: linear-gradient(180deg, #464646 0%, #222222 100%);
+  position: relative;
+  padding-bottom: 147%;
+}
+
+.imgContainer > img {
+  border-radius: 4px;
+  position: absolute;
+}
+
+.title {
+  font-size: 12px;
+  font-weight: 400;
+  color: #fff;
+  height: 42px;
+}
+
+@media screen and (min-width: 1280px) {
+  .imgContainer > img {
+    border-radius: 5px;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .imgContainer > img {
+    border-radius: 6px;
+  }
+
+  .title {
+    font-size: 14px;
+  }
+}

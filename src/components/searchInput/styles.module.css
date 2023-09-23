@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  gap: 12px;
+  padding: 16px 23px;
+  background-color: #37383e;
+  border-radius: 5px;
+}
+
+.input {
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
+  font-weight: 400;
+  color: #fff;
+  flex-grow: 1;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input::placeholder {
+  color: #aaaaaa;
+}
+
+.hide {
+  display: none;
+}
+
+@media screen and (min-width: 1920px) {
+  .container {
+    max-width: 892px;
+    margin-inline: auto;
+  }
+}

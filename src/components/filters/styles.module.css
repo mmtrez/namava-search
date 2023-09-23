@@ -1,0 +1,41 @@
+.container {
+  width: 280px;
+  min-width: 280px;
+  background-color: #37383e;
+  border-radius: 5px;
+  padding: 16px 24px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  gap: 31px;
+}
+
+.select {
+  display: flex;
+  gap: 8px;
+}
+
+.selectInput {
+  border: 1px solid #666666;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+@media screen and (min-width: 1280px) {
+  .container {
+    width: 307px;
+    min-width: 307px;
+  }
+}
