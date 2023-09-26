@@ -6,8 +6,8 @@ import classes from './styles.module.css';
 export function Filters() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchType, setSearchType] = useState({
-    movie: !!searchParams.get('type'),
-    series: !!searchParams.get('type'),
+    movie: searchParams.get('type') === 'movie',
+    series: searchParams.get('type') === 'series',
   });
 
   const handleSetFilter = (event) => {

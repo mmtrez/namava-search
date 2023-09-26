@@ -15,6 +15,7 @@ export function SearchContent() {
   const [result, setResult] = useState([]);
   const page = useRef(1);
 
+  // ** Fns
   const handleSearch = async () => {
     const items = await getSearchResult(searchType, page.current, searchTerm);
     if (items) {
@@ -38,16 +39,13 @@ export function SearchContent() {
     page.current = 1;
   };
 
+  // ** Effects
   useEffect(() => {
     setSearchTerm(searchParams.get('query') ?? '');
     setSearchType(searchParams.get('type') ?? 'all');
-    console.log('changed');
-  }, [searchParams]);
-
-  useEffect(() => {
     reset();
-    if (searchTerm && searchType) handleSearch();
-  }, [searchTerm, searchType]);
+    handleSearch();
+  }, [searchParams]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
