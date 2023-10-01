@@ -47,7 +47,7 @@ export function SearchInput() {
       <CloseIcon
         width="28px"
         height="28px"
-        className={searchTerm ? null : classes.hide}
+        className={`${searchTerm ? null : classes.hide} ${classes.close}`}
         onClick={handleClearSearch}
       />
     </div>

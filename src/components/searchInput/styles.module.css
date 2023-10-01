@@ -23,6 +23,10 @@
   color: #aaaaaa;
 }
 
+.close {
+  cursor: pointer;
+}
+
 .hide {
   display: none;
 }

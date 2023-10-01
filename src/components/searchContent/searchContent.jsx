@@ -10,8 +10,8 @@ import classes from './styles.module.css';
 
 export function SearchContent() {
   const [searchParams] = useSearchParams();
-  const [searchTerm, setSearchTerm] = useState(searchParams.get('query') ?? '');
-  const [searchType, setSearchType] = useState(searchParams.get('type') ?? 'all');
+  const searchType = searchParams.get('type') ?? 'all';
+  const searchTerm = searchParams.get('query') ?? '';
   const [result, setResult] = useState([]);
   const page = useRef(1);
 
@@ -41,16 +41,14 @@ export function SearchContent() {
 
   // ** Effects
   useEffect(() => {
-    setSearchTerm(searchParams.get('query') ?? '');
-    setSearchType(searchParams.get('type') ?? 'all');
     reset();
-    handleSearch();
-  }, [searchParams]);
+    if (searchTerm && searchType) handleSearch();
+  }, [searchTerm, searchType]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className={classes.container}>
