@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSearchParams} from 'react-router-dom';
 
 import {SearchInput} from '../searchInput/searchInput.jsx';
@@ -13,66 +13,80 @@ export function SearchContent() {
   const searchType = searchParams.get('type') ?? 'all';
   const searchTerm = searchParams.get('query') ?? '';
   const [result, setResult] = useState([]);
-  const page = useRef(1);
+  const [displayState, setDisplayState] = useState('empty');
+  const [page, setPage] = useState(1);
 
   // ** Fns
   const handleSearch = async () => {
-    const items = await getSearchResult(searchType, page.current, searchTerm);
-    if (items) {
-      setResult((prev) => [...prev, ...items]);
+    if (searchTerm) {
+      const items = await getSearchResult(searchType, page, searchTerm);
+      if (items) {
+        setResult((prev) => [...prev, ...items]);
+        setDisplayState('data');
+      } else if (result.length < 1) {
+        setDisplayState('notFound');
+      }
     }
   };
 
   const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-      document.documentElement.offsetHeight
-    ) {
+    const bottomDistance =
+      window.innerHeight +
+      document.documentElement.scrollTop -
+      document.documentElement.offsetHeight;
+
+    if (bottomDistance > 1 || bottomDistance < -1) {
       return;
     }
-    page.current++;
-    handleSearch();
+
+    setPage((prev) => prev + 1);
   };
 
   const reset = () => {
     setResult([]);
-    page.current = 1;
+    setPage(1);
+    setDisplayState('empty');
   };
 
   // ** Effects
   useEffect(() => {
     reset();
-    if (searchTerm && searchType) handleSearch();
+    handleSearch();
   }, [searchTerm, searchType]);
 
   useEffect(() => {
+    handleSearch();
+  }, [page]);
+
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
+
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [searchParams]);
+  }, []);
 
   return (
     <div className={classes.container}>
       <SearchInput />
-      {searchTerm ? (
-        result.length <= 0 ? (
-          <div className={classes.notFoundState}>
-            <NotFoundIcon width="140" height="140" />
-            <span>موردی یافت نشد.</span>
-          </div>
-        ) : (
-          <div className={classes.content}>
-            {result?.map((res, index) => (
-              <SearchCard key={index} data={res} />
-            ))}
-          </div>
-        )
-      ) : (
+      {displayState === 'empty' && (
         <div className={classes.emptyState}>
           <EmptySearchIcon width="140" height="140" />
           <span>
             عنوان فیلم، سریال یا بازیگر مورد نظر خود را جستجو کنید و یا از طریق فیلتر‌های
             موجود، فیلم و سریال مورد علاقه خود را پیدا کنید.
           </span>
+        </div>
+      )}
+      {displayState === 'notFound' && (
+        <div className={classes.notFoundState}>
+          <NotFoundIcon width="140" height="140" />
+          <span>موردی یافت نشد.</span>
+        </div>
+      )}
+      {displayState === 'data' && (
+        <div className={classes.content}>
+          {result?.map((res, index) => (
+            <SearchCard key={index} data={res} />
+          ))}
         </div>
       )}
     </div>
