@@ -3,7 +3,8 @@ import {useSearchParams} from 'react-router-dom';
 
 import {SearchInput} from '../searchInput/searchInput.jsx';
 import {SearchCard} from '../searchCard/searchCard.jsx';
-import {EmptySearchIcon, NotFoundIcon} from '../Icons/icons.jsx';
+import EmptyState from '../emptyState/emptyState.jsx';
+import NotFoundState from '../notFoundState/notFoundState.jsx';
 import getSearchResult from '../../services/getSearchResult.js';
 
 import classes from './styles.module.css';
@@ -19,13 +20,12 @@ export function SearchContent() {
   // ** Fns
   const handleSearch = async () => {
     if (searchTerm) {
+      setIsFetching(true);
       const items = await getSearchResult(searchType, page, searchTerm);
       if (items) {
         setResult((prev) => [...prev, ...items]);
-        setDisplayState('data');
-      } else if (result.length < 1) {
-        setDisplayState('notFound');
       }
+      setIsFetching(false);
     }
   };
 
@@ -45,7 +45,6 @@ export function SearchContent() {
   const reset = () => {
     setResult([]);
     setPage(1);
-    setDisplayState('empty');
   };
 
   // ** Effects
@@ -59,6 +58,14 @@ export function SearchContent() {
   }, [page]);
 
   useEffect(() => {
+    if (searchTerm) {
+      setDisplayState(result.length > 0 ? 'data' : 'notFound');
+    } else {
+      setDisplayState('empty');
+    }
+  }, [searchTerm]);
+
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
 
     return () => window.removeEventListener('scroll', handleScroll);
@@ -67,21 +74,8 @@ export function SearchContent() {
   return (
     <div className={classes.container}>
       <SearchInput />
-      {displayState === 'empty' && (
-        <div className={classes.emptyState}>
-          <EmptySearchIcon width="140" height="140" />
-          <span>
-            عنوان فیلم، سریال یا بازیگر مورد نظر خود را جستجو کنید و یا از طریق فیلتر‌های
-            موجود، فیلم و سریال مورد علاقه خود را پیدا کنید.
-          </span>
-        </div>
-      )}
-      {displayState === 'notFound' && (
-        <div className={classes.notFoundState}>
-          <NotFoundIcon width="140" height="140" />
-          <span>موردی یافت نشد.</span>
-        </div>
-      )}
+      {displayState === 'empty' && <EmptyState />}
+      {displayState === 'notFound' && <NotFoundState />}
       {displayState === 'data' && (
         <div className={classes.content}>
           {result?.map((res, index) => (
