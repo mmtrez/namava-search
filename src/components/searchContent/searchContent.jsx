@@ -20,11 +20,17 @@ export function SearchContent() {
 
   // ** Fns
   const handleSearch = async () => {
-    if (searchTerm) {
-      const items = await getSearchResult(searchType, page, searchTerm);
-      if (items) {
-        setResult((prev) => [...prev, ...items]);
-      }
+    if (!searchTerm) {
+      return setDisplayState('empty');
+    }
+
+    const items = await getSearchResult(searchType, page, searchTerm);
+
+    if (items) {
+      setResult((prev) => [...prev, ...items]);
+      setDisplayState('data');
+    } else if (page === 1) {
+      setDisplayState('notFound');
     }
   };
 
@@ -35,21 +41,12 @@ export function SearchContent() {
 
   // ** Effects
   useEffect(() => {
+    handleSearch();
+  }, [searchTerm, searchType, page]);
+
+  useEffect(() => {
     reset();
-    handleSearch();
   }, [searchTerm, searchType]);
-
-  useEffect(() => {
-    handleSearch();
-  }, [page]);
-
-  useEffect(() => {
-    if (searchTerm) {
-      setDisplayState(result.length > 0 ? 'data' : 'notFound');
-    } else {
-      setDisplayState('empty');
-    }
-  }, [searchTerm, result]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
