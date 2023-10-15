@@ -11,6 +11,10 @@
   margin-top: 24px;
 }
 
+.ref {
+  height: 1px;
+}
+
 @media screen and (min-width: 1280px) {
   .content {
     column-gap: 16px;

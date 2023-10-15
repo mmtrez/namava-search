@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useSearchParams} from 'react-router-dom';
 
 import {SearchInput} from '../searchInput/searchInput.jsx';
@@ -16,30 +16,16 @@ export function SearchContent() {
   const [result, setResult] = useState([]);
   const [displayState, setDisplayState] = useState('empty');
   const [page, setPage] = useState(1);
+  const lastCardRef = useRef(null);
 
   // ** Fns
   const handleSearch = async () => {
     if (searchTerm) {
-      setIsFetching(true);
       const items = await getSearchResult(searchType, page, searchTerm);
       if (items) {
         setResult((prev) => [...prev, ...items]);
       }
-      setIsFetching(false);
     }
-  };
-
-  const handleScroll = () => {
-    const bottomDistance =
-      window.innerHeight +
-      document.documentElement.scrollTop -
-      document.documentElement.offsetHeight;
-
-    if (bottomDistance > 1 || bottomDistance < -1) {
-      return;
-    }
-
-    setPage((prev) => prev + 1);
   };
 
   const reset = () => {
@@ -63,13 +49,22 @@ export function SearchContent() {
     } else {
       setDisplayState('empty');
     }
-  }, [searchTerm]);
+  }, [searchTerm, result]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    const observer = new IntersectionObserver((entries) => {
+      const target = entries[0];
+      if (target.isIntersecting) {
+        setPage((prev) => prev + 1);
+      }
+    });
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    if (lastCardRef.current) {
+      observer.observe(lastCardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [displayState]);
 
   return (
     <div className={classes.container}>
@@ -81,6 +76,7 @@ export function SearchContent() {
           {result?.map((res, index) => (
             <SearchCard key={index} data={res} />
           ))}
+          <div className={classes.ref} ref={lastCardRef}></div>
         </div>
       )}
     </div>
