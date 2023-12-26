@@ -13,11 +13,21 @@ export function SearchInput() {
     setSearchTerm(event.target.value);
   };
 
+  const handleClearSearch = () => {
+    setSearchTerm('');
+  };
+
   useEffect(() => {
-    if (!searchTerm) setSearchParams('');
+    if (!searchTerm) {
+      searchParams.delete('query');
+      setSearchParams(searchParams);
+    }
 
     const delayDebounce = setTimeout(() => {
-      if (searchTerm) setSearchParams({query: searchTerm});
+      if (searchTerm) {
+        searchParams.set('query', searchTerm);
+        setSearchParams(searchParams);
+      }
     }, 1000);
 
     return () => clearTimeout(delayDebounce);
@@ -37,7 +47,8 @@ export function SearchInput() {
       <CloseIcon
         width="28px"
         height="28px"
-        className={searchTerm ? null : classes.hide}
+        className={`${searchTerm ? null : classes.hide} ${classes.close}`}
+        onClick={handleClearSearch}
       />
     </div>
   );

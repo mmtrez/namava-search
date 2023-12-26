@@ -1,5 +1,6 @@
 .container {
   flex-grow: 1;
+  margin-top: 24px;
 }
 
 .content {
@@ -10,31 +11,8 @@
   margin-top: 24px;
 }
 
-.emptyState,
-.notFoundState {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  margin-top: 80px;
-  margin-inline: auto;
-}
-
-.emptyState > span,
-.notFoundState > span {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 24px;
-  text-align: center;
-  color: #aaaaaa;
-}
-
-.emptyState {
-  width: 400px;
-}
-
-.notFoundState {
-  width: 140px;
+.ref {
+  height: 1px;
 }
 
 @media screen and (min-width: 1280px) {

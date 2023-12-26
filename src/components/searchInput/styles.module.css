@@ -23,8 +23,18 @@
   color: #aaaaaa;
 }
 
+.close {
+  cursor: pointer;
+}
+
 .hide {
   display: none;
+}
+
+@media screen and (min-width: 1280px) {
+  .container {
+    gap: 16px;
+  }
 }
 
 @media screen and (min-width: 1920px) {
